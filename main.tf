@@ -250,7 +250,7 @@ resource "oci_core_volume_backup_policy" "this" {
 }
 
 resource "oci_core_volume_backup_policy_assignment" "this" {
-  count = var.num_of_oracle_linux_instances
+  count = 2 + var.num_of_oracle_linux_instances
 
   asset_id = (
     count.index < 2 ?
