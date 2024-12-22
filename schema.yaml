@@ -11,6 +11,7 @@ variableGroups:
   - title: Optional Variables
     variables:
     - cidr_block
+    - num_of_oracle_linux_instances
   - title: Hidden Variables
     visible: false
     variables:
@@ -36,8 +37,9 @@ variables:
   region:
     type: oci:identity:region:name
   num_of_oracle_linux_instances:
-    title: The number of compute instances to create
+    title: The number of free Oracle Linux compute instances to create
     type: number
+    pattern: ^(1|2|4)$ 
     default: 1
-    description: The number of compute instances to create
+    description: The number of free Oracle Linux compute instances to create
     required: true
