@@ -8,11 +8,13 @@ variableGroups:
     variables:
     - ssh_public_key
     - name
+  - title: instances (SUM MUST BE UNDER 4)
+    variables:
+    - num_of_oracle_linux_instances
+    - num_of_ubuntu_instances
   - title: Optional Variables
     variables:
     - cidr_block
-    - num_of_oracle_linux_instances
-    - num_of_ubuntu_instances
   - title: Hidden Variables
     visible: false
     variables:
@@ -49,21 +51,12 @@ variables:
     description: The number of free Oracle Linux compute instances to create
     required: true
   num_of_ubuntu_instances:
-    title: The number of free Ubuntu Linux compute instances to create
+    title: The number of free Ubuntu compute instances to create
     type: enum
     enum:
     - 0
     - 1
     - 2
     default: 1
-    description: The number of free Ubuntu Linux compute instances to create
+    description: The number of free Ubuntu compute instances to create
     required: true
-  instance_limit_warning:
-    title: "Warning: Total instances exceed the free tier limit!"
-    type: string
-    visible:
-      gt:
-        - ${num_of_oracle_linux_instances} + ${num_of_ubuntu_instances}
-        - 4
-    readOnly: true
-    default: "The total number of Oracle Linux and Ubuntu instances must not exceed 4."
