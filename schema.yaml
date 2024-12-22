@@ -50,6 +50,7 @@ variables:
     required: true
   num_of_ubuntu_instances:
     title: The number of free Ubuntu Linux compute instances to create
+    type: enum
     enum:
     - 0
     - 1
