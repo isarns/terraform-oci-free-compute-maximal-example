@@ -198,7 +198,7 @@ resource "oci_core_instance" "oracle" {
   create_vnic_details {
     assign_public_ip = false
     display_name     = "Oracle Linux ${count.index + 1}"
-    hostname_label   = "oracle-linux ${count.index + 1}"
+    hostname_label   = "oracle-linux-${count.index + 1}"
     nsg_ids          = [oci_core_network_security_group.this.id]
     subnet_id        = oci_core_subnet.this.id
   }
