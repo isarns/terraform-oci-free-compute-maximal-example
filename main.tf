@@ -181,7 +181,7 @@ resource "oci_core_instance" "oracle" {
   compartment_id      = oci_identity_compartment.this.id
   shape               = local.instance.oracle.shape
 
-  display_name         = "Oracle Linux"
+  display_name         = count.index == 1 ? "Oracle Linux" : "Oracle Linux ${count.index + 1}"
   preserve_boot_volume = false
 
   metadata = {
@@ -220,15 +220,17 @@ resource "oci_core_instance" "oracle" {
 }
 
 data "oci_core_private_ips" "this" {
-  ip_address = oci_core_instance.oracle.private_ip
+  count = var.num_of_oracle_linux_instances
+  ip_address = oci_core_instance.oracle.private_ip[count.index]
   subnet_id  = oci_core_subnet.this.id
 }
 
 resource "oci_core_public_ip" "this" {
+  count = var.num_of_oracle_linux_instances
   compartment_id = oci_identity_compartment.this.id
   lifetime       = "RESERVED"
 
-  display_name  = oci_core_instance.oracle.display_name
+  display_name  = oci_core_instance.oracle[count.index].display_name
   private_ip_id = data.oci_core_private_ips.this.private_ips.0.id
 }
 
@@ -248,12 +250,12 @@ resource "oci_core_volume_backup_policy" "this" {
 }
 
 resource "oci_core_volume_backup_policy_assignment" "this" {
-  count = 3
+  count = var.num_of_oracle_linux_instances
 
   asset_id = (
     count.index < 2 ?
     oci_core_instance.ubuntu[count.index].boot_volume_id :
-    oci_core_instance.oracle.boot_volume_id
+    oci_core_instance.oracle[count.index].boot_volume_id
   )
   policy_id = oci_core_volume_backup_policy.this.id
 }
