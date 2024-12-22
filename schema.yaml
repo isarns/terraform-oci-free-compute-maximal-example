@@ -57,6 +57,6 @@ variables:
     - 0
     - 1
     - 2
-    default: 1
+    default: 2
     description: The number of free Ubuntu compute instances to create
     required: true
