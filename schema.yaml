@@ -35,3 +35,9 @@ variables:
     type: oci:identity:compartment:id
   region:
     type: oci:identity:region:name
+  number_of_instances:
+    title: The number of compute instances to create
+    type: number
+    default: 1
+    description: The number of compute instances to create
+    required: true

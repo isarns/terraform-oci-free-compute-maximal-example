@@ -175,6 +175,8 @@ resource "oci_core_instance" "ubuntu" {
 }
 
 resource "oci_core_instance" "oracle" {
+  count = var.num_of_oracle_linux_instances
+
   availability_domain = random_shuffle.this.result.0
   compartment_id      = oci_identity_compartment.this.id
   shape               = local.instance.oracle.shape
@@ -202,14 +204,14 @@ resource "oci_core_instance" "oracle" {
   }
 
   shape_config {
-    memory_in_gbs = 24
-    ocpus         = 4
+    memory_in_gbs = 24 / var.num_of_oracle_linux_instances
+    ocpus         = 4 / var.num_of_oracle_linux_instances
   }
 
   source_details {
     source_id               = data.oci_core_images.this["oracle"].images.0.id
     source_type             = "image"
-    boot_volume_size_in_gbs = 100
+    boot_volume_size_in_gbs = 100 / var.num_of_oracle_linux_instances
   }
 
   lifecycle {

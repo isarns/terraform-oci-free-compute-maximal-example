@@ -10,6 +10,12 @@ variable "region" {
   nullable    = false
 }
 
+variable "num_of_oracle_linux_instances" {
+  description = "Number of Oracle Linux instances to create"
+  type        = number
+  default     = 1
+}
+
 variable "name" {
   description = "Display name for resources"
   type        = string
