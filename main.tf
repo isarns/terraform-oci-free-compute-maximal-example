@@ -231,7 +231,7 @@ resource "oci_core_public_ip" "this" {
   lifetime       = "RESERVED"
 
   display_name  = oci_core_instance.oracle[count.index].display_name
-  private_ip_id = data.oci_core_private_ips.this.private_ips.0.id
+  private_ip_id = data.oci_core_private_ips.this[count.index].private_ips.0.id
 }
 
 resource "oci_core_volume_backup_policy" "this" {
