@@ -255,7 +255,7 @@ resource "oci_core_volume_backup_policy_assignment" "this" {
   asset_id = (
     count.index < 2 ?
     oci_core_instance.ubuntu[count.index].boot_volume_id :
-    oci_core_instance.oracle[count.index].boot_volume_id
+    oci_core_instance.oracle[count.index-2].boot_volume_id
   )
   policy_id = oci_core_volume_backup_policy.this.id
 }
