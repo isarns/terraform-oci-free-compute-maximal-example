@@ -181,7 +181,7 @@ resource "oci_core_instance" "oracle" {
   compartment_id      = oci_identity_compartment.this.id
   shape               = local.instance.oracle.shape
 
-  display_name         = count.index == 1 ? "Oracle Linux" : "Oracle Linux ${count.index + 1}"
+  display_name         = "Oracle Linux ${count.index + 1}"
   preserve_boot_volume = false
 
   metadata = {
@@ -197,8 +197,8 @@ resource "oci_core_instance" "oracle" {
 
   create_vnic_details {
     assign_public_ip = false
-    display_name     = "Oracle Linux"
-    hostname_label   = "oracle-linux"
+    display_name     = "Oracle Linux ${count.index + 1}"
+    hostname_label   = "oracle-linux ${count.index + 1}"
     nsg_ids          = [oci_core_network_security_group.this.id]
     subnet_id        = oci_core_subnet.this.id
   }
