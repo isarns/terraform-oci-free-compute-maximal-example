@@ -211,7 +211,7 @@ resource "oci_core_instance" "oracle" {
   source_details {
     source_id               = data.oci_core_images.this["oracle"].images.0.id
     source_type             = "image"
-    boot_volume_size_in_gbs = 100 / var.num_of_oracle_linux_instances
+    boot_volume_size_in_gbs = 200 / var.num_of_oracle_linux_instances
   }
 
   lifecycle {
