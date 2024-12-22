@@ -221,7 +221,7 @@ resource "oci_core_instance" "oracle" {
 
 data "oci_core_private_ips" "this" {
   count = var.num_of_oracle_linux_instances
-  ip_address = oci_core_instance.oracle.private_ip[count.index]
+  ip_address = oci_core_instance.oracle[count.index].private_ip
   subnet_id  = oci_core_subnet.this.id
 }
 
