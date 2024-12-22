@@ -22,4 +22,6 @@ locals {
       },
     },
   }
+
+  size_of_boot_volume = 200 / (var.num_of_oracle_linux_instances + var.num_of_ubuntu_instances)
 }

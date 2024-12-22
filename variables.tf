@@ -16,6 +16,12 @@ variable "num_of_oracle_linux_instances" {
   default     = 1
 }
 
+variable "num_of_ubuntu_instances" {
+  description = "Number of Ubuntu instances to create"
+  type        = number
+  default     = 1
+}
+
 variable "name" {
   description = "Display name for resources"
   type        = string

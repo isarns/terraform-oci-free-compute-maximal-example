@@ -12,6 +12,7 @@ variableGroups:
     variables:
     - cidr_block
     - num_of_oracle_linux_instances
+    - num_of_ubuntu_instances
   - title: Hidden Variables
     visible: false
     variables:
@@ -38,8 +39,30 @@ variables:
     type: oci:identity:region:name
   num_of_oracle_linux_instances:
     title: The number of free Oracle Linux compute instances to create
-    type: number
-    pattern: ^(1|2|4)$ 
+    type: enum
+    enum:
+    - 0
+    - 1
+    - 2
+    - 4
     default: 1
     description: The number of free Oracle Linux compute instances to create
     required: true
+  num_of_ubuntu_instances:
+    title: The number of free Ubuntu Linux compute instances to create
+    enum:
+    - 0
+    - 1
+    - 2
+    default: 1
+    description: The number of free Ubuntu Linux compute instances to create
+    required: true
+  instance_limit_warning:
+    title: "Warning: Total instances exceed the free tier limit!"
+    type: string
+    visible:
+      gt:
+        - ${num_of_oracle_linux_instances} + ${num_of_ubuntu_instances}
+        - 4
+    readOnly: true
+    default: "The total number of Oracle Linux and Ubuntu instances must not exceed 4."

@@ -130,7 +130,7 @@ data "oci_core_images" "this" {
 }
 
 resource "oci_core_instance" "ubuntu" {
-  count = 2
+  count = var.num_of_ubuntu_instances
 
   availability_domain = one(
     [
@@ -166,7 +166,7 @@ resource "oci_core_instance" "ubuntu" {
   source_details {
     source_id               = data.oci_core_images.this["ubuntu"].images.0.id
     source_type             = "image"
-    boot_volume_size_in_gbs = 50
+    boot_volume_size_in_gbs = local.size_of_boot_volume
   }
 
   lifecycle {
@@ -211,7 +211,7 @@ resource "oci_core_instance" "oracle" {
   source_details {
     source_id               = data.oci_core_images.this["oracle"].images.0.id
     source_type             = "image"
-    boot_volume_size_in_gbs = 200 / var.num_of_oracle_linux_instances
+    boot_volume_size_in_gbs = local.size_of_boot_volume
   }
 
   lifecycle {
@@ -250,10 +250,10 @@ resource "oci_core_volume_backup_policy" "this" {
 }
 
 resource "oci_core_volume_backup_policy_assignment" "this" {
-  count = 2 + var.num_of_oracle_linux_instances
+  count = var.num_of_ubuntu_instances + var.num_of_oracle_linux_instances
 
   asset_id = (
-    count.index < 2 ?
+    count.index < var.num_of_ubuntu_instances ?
     oci_core_instance.ubuntu[count.index].boot_volume_id :
     oci_core_instance.oracle[count.index - 2].boot_volume_id
   )
